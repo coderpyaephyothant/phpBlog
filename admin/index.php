@@ -32,7 +32,7 @@ if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESS
                 $pagenumber = 1;
               }
 
-              $numberOfRecords = 1;
+              $numberOfRecords = 5;
               $offset = ($pagenumber - 1) * $numberOfRecords;
 
               if(empty($_POST['search'])){
