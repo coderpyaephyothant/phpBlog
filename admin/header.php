@@ -32,7 +32,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3" method="post" action="index.php">
+
+<?php
+  $link = $_SERVER['PHP_SELF'];
+  $linkExplode = explode('/',$link);
+  $linkAddress = end($linkExplode);
+  // print"<pre>";
+  // print_r($linkExplode);
+ ?>
+
+
+
+    <form class="form-inline ml-3" method="post" action="<?php echo $linkAddress == 'index.php' ? 'index.php' : 'useradd.php' ?>">
       <div class="input-group input-group-sm">
         <input name="search" class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
@@ -83,17 +94,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a href="index.php" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Blogs
+                Blog Contacts
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="useradd.php" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+            <a href="useradd.php" class="nav-link">&nbsp;
+              <i class="fas fa-user"></i>
               <p>
-                User Account
+               &nbsp;User Accounts
                 <!-- <span class="right badge badge-danger">New</span> -->
               </p>
             </a>
