@@ -5,12 +5,24 @@
   if(!empty($_POST)){
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $pdostatement = $pdo->prepare( " SELECT * FROM  users WHERE email=:email" );
+    // $role = '1';
+    $pdostatement = $pdo->prepare( " SELECT * FROM  users WHERE email=:email");
     $pdostatement->bindValue(':email',$email);
     $pdostatement->execute();
     $result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+
+
     // print"<pre>";
-    // print_r($result);exit();
+    // print_r($result); exit();
+
+    // if($result['role'] >= 1 ){
+    //   echo"<script>alert('User cannot enter...')</script>";
+    // }else {
+    //
+    //   echo"<script>alert('Welcome admin')</script>";
+    //
+    // } exit();
+
     if($result){
       if ($result['password']== $password){
         $_SESSION['user_name'] = $result['name'];
