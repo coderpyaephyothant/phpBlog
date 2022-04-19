@@ -5,6 +5,10 @@ session_start();
 if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESSION['user_name'])){
   echo "<script>alert('please login first.');window.location.href='login.php'</script>";
 }
+
+if($_SESSION['role'] != 1 ){
+  echo "<script>alert('Must be Admin Account..');window.location.href='login.php'</script>";
+}
  ?>
 
 

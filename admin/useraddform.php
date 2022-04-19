@@ -13,42 +13,52 @@
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-
-    if ($name == '' || $email == '' || $password == ''){
-      echo"<script>alert('Fill Data First.');window.location.href='useraddform.php'</script>";
-    }
-
-    if ( empty($_POST['role']) ){
+    if (empty($_POST['role'])){
       $role=0;
     } else {
       $role = 1;
     }
-    $pdo_statement = $pdo->prepare(" SELECT * FROM users WHERE email = :email ");
-    $pdo_statement->execute(
-      array(
-        ':email'=> $email
-      )
-    );
-    $emailResult = $pdo_statement->fetchAll();
-    if ($emailResult){
-      echo"<script>alert('Your email is already Registered.')</script>";
-    }else {
-      $pdo_stmt = $pdo->prepare (" INSERT INTO users(name,email,password,role) VALUES (:name,:email,:password,:role) ");
-      $insertResult = $pdo_stmt -> execute(
-        array(
-          ':name' => $name,
-          ':email' => $email,
-          ':password' => $password,
-          ':role' => $role
-        )
-      );
-      echo"<script>alert('Sucessfully Registered.');window.location.href='useradd.php'</script>";
-    }
+      if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) || strlen($_POST['password']) < 4){
+
+          if (empty($_POST['name'])){
+            $nameError = 'Please fill account name';
+          }
+          if (empty($_POST['email'])){
+            $emailError = 'Please fill account email';
+          }
+          if (empty($_POST['password'])){
+            $passwordError = 'Please fill account password';
+          }
+          if (strlen($_POST['password']) < 4 ) {
+            $passwordError = 'Password must be at least 4 character to be strong...';
+          }
 
 
 
+      } else {
+        $pdo_statement = $pdo->prepare(" SELECT * FROM users WHERE email = :email ");
+        $pdo_statement->execute(
+          array(
+            ':email'=> $email
+          )
+        );
+        $emailResult = $pdo_statement->fetchAll();
+        if ($emailResult){
+          echo"<script>alert('Your email is already Registered.')</script>";
+        }else {
+          $pdo_stmt = $pdo->prepare (" INSERT INTO users(name,email,password,role) VALUES (:name,:email,:password,:role) ");
+          $insertResult = $pdo_stmt -> execute(
+            array(
+              ':name' => $name,
+              ':email' => $email,
+              ':password' => $password,
+              ':role' => $role
+            )
+          );
+          echo"<script>alert('Sucessfully Registered.');window.location.href='useradd.php'</script>";
+        }
 
-
+      }
     // print"<pre>";
     // print_r($result);exit();
     // echo"<script>alert('Wrong email or password')</script>";
@@ -93,15 +103,18 @@
       <div class="card-body">
         <div class="form-group ">
           <label for="inputEmail3" class="col-form-label">Name</label>
-            <input type="text" name="name" class="form-control"  placeholder="Name" required>
+          <p style="color:blue;"><?php echo empty($nameError) ? '' : $nameError ?></p>
+            <input type="text" name="name" class="form-control"  placeholder="Name" >
           </div>
           <div class="form-group ">
             <label for="inputEmail3" class="col-form-label">Email</label>
-              <input type="email" name="email" class="form-control"  required placeholder="Email">
+            <p style="color:blue;"><?php echo empty($emailError) ? '' : $emailError ?></p>
+              <input type="email" name="email" class="form-control"   placeholder="Email">
           </div>
           <div class="form-group ">
             <label for="inputPassword3" class="col-form-label">Password</label>
-              <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password" required>
+            <p style="color:blue;"><?php echo empty($passwordError) ? '' : $passwordError ?></p>
+              <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password" >
           </div>
           <div class="form-group ">
               <div class="form-check" style="padding-left:0px !important;">

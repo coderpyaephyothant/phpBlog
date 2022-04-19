@@ -14,13 +14,14 @@
     if($result){
       if ($result['password']== $password){
         $_SESSION['user_name'] = $result['name'];
+        $_SESSION['role'] = 0;
         $_SESSION['user_id'] = $result['id'];
         $_SESSION['logged_in'] = time();
         header('Location:index.php');
       }
     }
 
-      echo"<script>alert('Wrong email or password')</script>";
+      echo"<script>alert('Incorrect Credential. . . .')</script>";
 
   }
 ?>
@@ -48,7 +49,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>User Login </b> Blog</a>
+    <a href="#"><b>User Login </b> Blog</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

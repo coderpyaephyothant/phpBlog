@@ -3,28 +3,42 @@
   session_start();
 
   if(!empty($_POST)){
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $pdostatement = $pdo->prepare( " SELECT * FROM  users WHERE email=:email" );
-    $pdostatement->bindValue(':email',$email);
-    $pdostatement->execute();
-    $result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-    if($result){
-      echo"<script>alert('Email is already registered...');</script>";
-    }else{
-      $pdo_statement = $pdo->prepare( " INSERT INTO users (name,email,password) VALUES (:name,:email,:password) " );
-      $result2 = $pdo_statement->execute(
-        array(
-          ':name' =>$name,
-          ':email' => $email,
-          ':password' => $password
-
-        )
-      );
-      if ($result2) {
-        echo "<script>alert('Successfully Registered.Please Login..' );window.location.href='login.php';</script>";
-      };
+    if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) || !empty($_POST['password'] ){
+        if (empty($_POST['name'])){
+          $nameError = ' *** Please fill account name ***';
+        }
+        if (empty($_POST['email'])){
+          $emailError = ' *** Please fill account email *** ';
+        }
+        if (empty($_POST['password'])){
+          $passwordError = ' *** Please fill account password *** ';
+        }
+    }elseif (!empty($_POST['password']) && strlen($_POST['password']) <4 ) {
+          $passwordError = ' *** Password must be at least 4 characters *** ';
+    }
+    else{
+      $name = $_POST['name'];
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+      $pdostatement = $pdo->prepare( " SELECT * FROM  users WHERE email=:email" );
+      $pdostatement->bindValue(':email',$email);
+      $pdostatement->execute();
+      $result = $pdostatement->fetch(PDO::FETCH_ASSOC);
+      if($result){
+        echo"<script>alert('Email has already registered...');</script>";
+      }else{
+        $pdo_statement = $pdo->prepare( " INSERT INTO users (name,email,password) VALUES (:name,:email,:password) " );
+        $result2 = $pdo_statement->execute(
+          array(
+            ':name' =>$name,
+            ':email' => $email,
+            ':password' => $password
+          )
+        );
+        if ($result2) {
+          echo "<script>alert('Successfully Registered.Please Login..' );window.location.href='login.php';</script>";
+        };
+      }
     }
   }
 ?>
@@ -60,6 +74,7 @@
       <h4 class="login-box-msg">Register</h4>
 
       <form action="register.php" method="post">
+        <p style="color:blue;"><?php echo  empty($nameError) ? '' : $nameError;?></p>
         <div class="input-group mb-3">
           <input type="text" name="name" class="form-control" placeholder="Name">
           <div class="input-group-append">
@@ -68,6 +83,7 @@
             </div>
           </div>
         </div>
+        <p style="color:blue;"><?php echo empty($emailError) ? '' : $emailError; ?></p>
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
@@ -76,6 +92,7 @@
             </div>
           </div>
         </div>
+        <p style="color:blue;"><?php echo empty($passwordError) ? '' : $passwordError;  ?></p>
         <div class="input-group mb-3">
           <input type="password" name="password" class="form-control" placeholder="Password">
           <div class="input-group-append">

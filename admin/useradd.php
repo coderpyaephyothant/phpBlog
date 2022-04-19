@@ -5,6 +5,20 @@ session_start();
 if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESSION['user_name'])){
   echo "<script>alert('please login first.');window.location.href='login.php'</script>";
 }
+
+if($_SESSION['role'] != 1 ){
+  echo "<script>alert('Must be Admin Account..');window.location.href='login.php'</script>";
+}
+
+if (!empty($_POST['search'])){
+  setcookie('search', $_POST['search'], time() + (86400 * 30), "/"); // 86400 = 1 day
+}else{
+  if(empty($_GET['pageNumber'])){
+    unset($_COOKIE['search']);
+    setcookie('search', null, -1, '/');
+  }
+}
+
  ?>
 
 
@@ -31,11 +45,11 @@ if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESS
               } else {
                 $pageNumber = 1;
               };
-              $numberOfRecs = 2;
+              $numberOfRecs = 3;
 
               $offset = ($pageNumber - 1) * $numberOfRecs;
 
-               if(empty($_POST['search'])){
+               if(empty($_POST['search']) && empty($_COOKIE['search'])){
                  $pdo_stmt = $pdo->prepare("  SELECT * FROM users ORDER BY id DESC  ");
                  $pdo_stmt->execute();
                  $result1 = $pdo_stmt->fetchAll();
@@ -48,7 +62,7 @@ if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESS
                  // print"<pre>";
                  // print_r(count($result2));
                }else {
-                 $searchKey = $_POST['search'];
+                 $searchKey = !empty($_POST['search']) ? $_POST['search'] : $_COOKIE['search'];
                  $pdo_stmt = $pdo->prepare("  SELECT * FROM users WHERE name LIKE '%$searchKey%' ORDER BY id DESC  ");
                  $pdo_stmt->execute();
                  $result1 = $pdo_stmt->fetchAll();

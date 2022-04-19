@@ -6,8 +6,9 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
     // $role = '1';
-    $pdostatement = $pdo->prepare( " SELECT * FROM  users WHERE email=:email");
+    $pdostatement = $pdo->prepare( " SELECT * FROM  users WHERE email=:email AND role=:role");
     $pdostatement->bindValue(':email',$email);
+    $pdostatement->bindValue(':role',1);
     $pdostatement->execute();
     $result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
@@ -26,6 +27,7 @@
     if($result){
       if ($result['password']== $password){
         $_SESSION['user_name'] = $result['name'];
+        $_SESSION['role'] = 1;
         $_SESSION['user_id'] = $result['id'];
         $_SESSION['logged_in'] = time();
         header('Location:index.php');
@@ -60,7 +62,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href=""><b>Login </b> Blog</a>
+    <a href=""><b>Admin Login </b> Blog</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

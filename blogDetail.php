@@ -37,21 +37,32 @@ if($cmresult){
 
 
 if(!empty($_POST)){
-  $comment = $_POST['comment'];
 
-  $pdo_statement = $pdo->prepare( " INSERT INTO comments (content,author_id,post_id) VALUES (:content,:author_id,:post_id) " );
-  $result2 = $pdo_statement->execute(
-  array(
-  ':content' =>$comment,
-  ':author_id' => $_SESSION['user_id'],
-  ':post_id' => $id
+    $comment = $_POST['comment'];
+    if (empty($_POST['comment'])){
+      $commentError = 'Comment cannot be empty..Please try again...';
+    }else{
+      $pdo_statement = $pdo->prepare( " INSERT INTO comments (content,author_id,post_id) VALUES (:content,:author_id,:post_id) " );
+      $result2 = $pdo_statement->execute(
+      array(
+      ':content' =>$comment,
+      ':author_id' => $_SESSION['user_id'],
+      ':post_id' => $id
 
-      )
-    );
-    if ($result2) {
-      header('Location: blogdetail.php?id='.$id);
-    };
+          )
+        );
+        if ($result2) {
+          header('Location: blogdetail.php?id='.$id);
+        };
+    }
+
+
+
+
   }
+
+
+
 
 
 
@@ -138,22 +149,6 @@ if(!empty($_POST)){
           }
 
                  ?>
-
-
-
-
-
-
-
-
-
-
-
-                <!-- User image -->
-                <!-- <img class="img-circle img-sm" src="dist/img/user3-128x128.jpg" alt="User Image"> -->
-
-
-
                 <!-- /.comment-text -->
               </div>
               <!-- /.card-comment -->
@@ -165,23 +160,13 @@ if(!empty($_POST)){
                 <!-- <img class="img-fluid img-circle img-sm" src="dist/img/user4-128x128.jpg" alt="Alt Text"> -->
                 <!-- .img-push is used to add margin to elements next to floating images -->
                 <div class="img-push">
+                  <p style="color:red;"><?php echo empty($commentError) ? '' : $commentError; ?></p>
                   <input type="text" name="comment" class="form-control form-control-sm" placeholder="Press enter to post comment">
                 </div>
               </form>
             </div>
             <!-- /.card-footer -->
           </div>
-          <!-- /.card -->
-
-
-
-        <!-- </div> -->
-
-
-
-        <!-- /.col -->
-
-        <!-- /.col -->
       </div>
 
 

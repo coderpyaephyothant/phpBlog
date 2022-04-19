@@ -32,10 +32,11 @@ if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESS
   <div class="content-wrapper" style="margin-left:0px !important">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <a href="logout.php" type="button" class="btn btn-info" style="float:left;">Logout</a>
+      <a href="logout.php" type="button" class="btn btn-info" style="float:right;">Logout</a>
       <div class="container-fluid">
-        <h1 style="text-align:center;">Pyae Phyo Thant Blogs</h1>
-      </div><!-- /.container-fluid -->
+        <h1 style="text-align:center; color:green;"><b>Products and Details</b></h1>
+
+      </div><!-- /.container-fluid --> <br> <br>
 
 
     </section>
@@ -54,7 +55,7 @@ if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESS
       }else {
       $pgnumber = 1;
       }
-      $numberOfRecs = 3;
+      $numberOfRecs = 6;
       $offset = ($pgnumber - 1 ) * $numberOfRecs;
 
       $pdo_stmt = $pdo->prepare("  SELECT * FROM posts ORDER BY id DESC  ");
@@ -82,7 +83,7 @@ if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESS
             <div class="card card-widget">
               <div class="card-header">
                 <!-- /.user-block -->
-                <h4 style="text-align:center !important; float:none"><?php echo $value['title'] ?></h4 >
+                <h4 style="text-align:center !important; float:none; color:grey;"><?php echo $value['title'] ?></h4 >
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
@@ -116,7 +117,7 @@ if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESS
                <li class="page-item "><a class="page-link" href="?pageNumber=1">First</a></li>
                <li class="page-item <?php if($pgnumber <=1){ echo 'disabled';} ?>">
                  <a class="page-link" href="<?php if($pgnumber <=1){ echo '#';} else { echo "?pageNumber=".($pgnumber-1);} ?>">Previous</a></li>
-               <li class="page-item"><a class="page-link" href="#">1</a></li>
+               <li class="page-item"><a class="page-link" href="#"><?php echo 'Page '. $pgnumber ?></a></li>
                <li class="page-item <?php if($pgnumber >= $totalPages){ echo 'disabled';} ?>">
                  <a class="page-link" href="<?php if ($pgnumber >= $totalPages){ echo '#';} else {echo "?pageNumber=".($pgnumber +1 );} ?>">Next</a></li>
                <li class="page-item"><a class="page-link" href="?pageNumber=<?php echo $totalPages ?>">Last</a></li>
