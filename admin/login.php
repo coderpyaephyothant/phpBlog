@@ -6,9 +6,8 @@
     $email = $_POST['email'];
     $password = $_POST['password'];
     // $role = '1';
-    $pdostatement = $pdo->prepare( " SELECT * FROM  users WHERE email=:email AND role=:role");
+    $pdostatement = $pdo->prepare( " SELECT * FROM  users WHERE email=:email");
     $pdostatement->bindValue(':email',$email);
-    $pdostatement->bindValue(':role',1);
     $pdostatement->execute();
     $result = $pdostatement->fetch(PDO::FETCH_ASSOC);
 
@@ -25,7 +24,7 @@
     // } exit();
 
     if($result){
-      if ($result['password']== $password){
+      if (password_verify($password,$result['password'])){
         $_SESSION['user_name'] = $result['name'];
         $_SESSION['role'] = 1;
         $_SESSION['user_id'] = $result['id'];

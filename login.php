@@ -12,7 +12,7 @@
     // print"<pre>";
     // print_r($result);exit();
     if($result){
-      if ($result['password']== $password){
+      if (password_verify($password,$result['password'])){
         $_SESSION['user_name'] = $result['name'];
         $_SESSION['role'] = 0;
         $_SESSION['user_id'] = $result['id'];

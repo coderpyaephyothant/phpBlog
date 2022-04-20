@@ -3,9 +3,12 @@
   session_start();
 
   if(!empty($_POST)){
-    if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) || !empty($_POST['password'] ){
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
+    if (empty($_POST['name']) || empty($_POST['email']) || empty($_POST['password']) || !empty($_POST['password'])&& strlen($_POST['password'])<4){
         if (empty($_POST['name'])){
-          $nameError = ' *** Please fill account name ***';
+          $nameError = '*** Please fill account name ***';
         }
         if (empty($_POST['email'])){
           $emailError = ' *** Please fill account email *** ';
@@ -13,13 +16,11 @@
         if (empty($_POST['password'])){
           $passwordError = ' *** Please fill account password *** ';
         }
-    }elseif (!empty($_POST['password']) && strlen($_POST['password']) <4 ) {
-          $passwordError = ' *** Password must be at least 4 characters *** ';
+        if (!empty($_POST['password']) && strlen($_POST['password'])<4) {
+            $passwordError = '*** Password should be at least 4 characters ***';
+        }
     }
     else{
-      $name = $_POST['name'];
-      $email = $_POST['email'];
-      $password = $_POST['password'];
       $pdostatement = $pdo->prepare( " SELECT * FROM  users WHERE email=:email" );
       $pdostatement->bindValue(':email',$email);
       $pdostatement->execute();
@@ -48,7 +49,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin Blogs | User Log in</title>
+  <title>User Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -74,16 +75,16 @@
       <h4 class="login-box-msg">Register</h4>
 
       <form action="register.php" method="post">
-        <p style="color:blue;"><?php echo  empty($nameError) ? '' : $nameError;?></p>
+        <p style="color:red;font-size:13px;"><b><?php echo  empty($nameError) ? '' : $nameError;?></b></p>
         <div class="input-group mb-3">
           <input type="text" name="name" class="form-control" placeholder="Name">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-user"></span>
             </div>
           </div>
         </div>
-        <p style="color:blue;"><?php echo empty($emailError) ? '' : $emailError; ?></p>
+        <p style="color:red;font-size:13px;"><b><?php echo empty($emailError) ? '' : $emailError; ?></b></p>
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
@@ -92,7 +93,7 @@
             </div>
           </div>
         </div>
-        <p style="color:blue;"><?php echo empty($passwordError) ? '' : $passwordError;  ?></p>
+        <p style="color:red;font-size:13px;"><b><?php echo empty($passwordError) ? '' : $passwordError;  ?></b></p>
         <div class="input-group mb-3">
           <input type="password" name="password" class="form-control" placeholder="Password">
           <div class="input-group-append">

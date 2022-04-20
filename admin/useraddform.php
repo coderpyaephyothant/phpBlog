@@ -2,9 +2,6 @@
 
 
 
-
-
-
 <?php
   require '../config/config.php';
   session_start();
@@ -12,7 +9,7 @@
   if(!empty($_POST)){
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password =  password_hash($_POST['password'],PASSWORD_DEFAULT);      //********password hash funcion addded*********
     if (empty($_POST['role'])){
       $role=0;
     } else {
@@ -32,9 +29,6 @@
           if (strlen($_POST['password']) < 4 ) {
             $passwordError = 'Password must be at least 4 character to be strong...';
           }
-
-
-
       } else {
         $pdo_statement = $pdo->prepare(" SELECT * FROM users WHERE email = :email ");
         $pdo_statement->execute(

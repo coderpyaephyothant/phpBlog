@@ -11,14 +11,14 @@
   if(!empty($_POST)){
         $name = $_POST['name'];
         $email = $_POST['email'];
-        $password = $_POST['password'];
+        $password = password_hash($_POST['password'],PASSWORD_DEFAULT);
         $id = $_POST['id'];
         if ( empty($_POST['role']) ){
             $role=0;
-          } else {
+          } else { 
             $role = 1;
           }
-            if (empty($_POST['name']) || empty($_POST['email']) || !empty($_POST['password']) ) {
+            if (empty($_POST['name']) || empty($_POST['email']) || !empty($_POST['password'])&& strlen($_POST['password'])<4 ) {
                 if (empty($_POST['name'])){
                   $nameError = 'Please fill account name...';
                 }

@@ -48,23 +48,13 @@ if(!empty($_POST)){
       ':content' =>$comment,
       ':author_id' => $_SESSION['user_id'],
       ':post_id' => $id
-
           )
         );
         if ($result2) {
           header('Location: blogdetail.php?id='.$id);
         };
     }
-
-
-
-
   }
-
-
-
-
-
 
  ?>
 
@@ -87,47 +77,24 @@ if(!empty($_POST)){
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-
-
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="margin-left:0px !important;">
-    <!-- Content Header (Page header) -->
 
     <!-- Main content -->
     <section class="content" >
-
-
       <div class="container" style="padding-left:5rem !important; padding-right:5rem !important;">
-        <!-- <div class="col-md-8"> -->
-          <!-- Box Comment -->
           <a href="index.php" type="button" class="btn btn-primary" style="margin-top:1rem !important; ">Back to Home</a> <br> <br>
           <div class="card card-widget">
-
               <div class="card-header">
-
-                <!-- /.user-block -->
                 <h4 style="text-align:center !important; float:none"><?php echo $result [0] ['title'] ?></h4 >
-                <!-- /.card-tools -->
               </div>
-              <!-- /.user-block -->
-              <!-- /.card-tools -->
-
-            <!-- /.card-header -->
             <div class="card-body">
               <img class="img-fluid pad" style="width:100% !important;" src="images/<?php echo $result [0]  ['image'] ?>" alt="Photo"><br><br>
-
               <p><?php echo $result [0] ['content'] ?></p>
-              <!-- <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i> Share</button>
-              <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
-              <span class="float-right text-muted">127 likes - 3 comments</span> -->
-
             </div>
             <!-- /.card-body -->
             <div class="card-footer card-comments">
               <h4>Comments</h4> <hr>
               <div class="card-comment">
-
-
 
                 <?php
                 if ($cmresult){
@@ -140,19 +107,13 @@ if(!empty($_POST)){
                       <span class="text-muted float-right"><?php echo $value['created_at'] ?></span>
                     </span><!-- /.username -->
                     <?php echo($value)['content'] ?>
-
                   </div> <hr> <br>
-
                 <?php
               $id ++;
             }
           }
-
                  ?>
-                <!-- /.comment-text -->
               </div>
-              <!-- /.card-comment -->
-              <!-- /.card-comment -->
             </div>
             <!-- /.card-footer -->
             <div class="card-footer">
@@ -168,11 +129,6 @@ if(!empty($_POST)){
             <!-- /.card-footer -->
           </div>
       </div>
-
-
-
-
-
     </section>
     <!-- /.content -->
 
