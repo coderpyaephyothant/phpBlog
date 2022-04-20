@@ -107,7 +107,8 @@ if(!empty($_POST)){
                       <?php print_r($authorResult[$key][0]['name'])  ?>
                       <span class="text-muted float-right"><?php echo $value['created_at'] ?></span>
                     </span><!-- /.username -->
-                    <?php echo($value)['content'] ?>
+                    <?php echo escape(($value)['content']); ?>
+                    <!-- user comment -->
                   </div> <hr> <br>
                 <?php
               $id ++;

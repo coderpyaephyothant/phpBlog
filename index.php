@@ -1,6 +1,7 @@
 
 <?php
 require 'config/config.php';
+require 'config/common.php';
 session_start();
 if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESSION['user_name'])){
   echo "<script>alert('please login first.');window.location.href='login.php'</script>";
@@ -83,12 +84,12 @@ if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESS
             <div class="card card-widget">
               <div class="card-header">
                 <!-- /.user-block -->
-                <h4 style="text-align:center !important; float:none; color:grey;"><?php echo $value['title'] ?></h4 >
+                <h4 style="text-align:center !important; float:none; color:grey;"><?php echo escape($value['title']) ?></h4 >
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="blogdetail.php?id=<?php echo $value['id'] ?>"><img class="img-fluid pad" width="250px" src="images/<?php echo $value  ['image'] ?>" alt="Photo" style="height:250px !important;width: 100% !important;"></a>
+                <a href="blogdetail.php?id=<?php echo escape($value['id'] )?>"><img class="img-fluid pad" width="250px" src="images/<?php echo $value  ['image'] ?>" alt="Photo" style="height:250px !important;width: 100% !important;"></a>
               </div>
               <!-- /.card-body -->
               <!-- /.card-footer -->

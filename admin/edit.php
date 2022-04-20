@@ -85,12 +85,12 @@ if($_POST){
                     <input type="hidden" name="id" value="<?php echo $result [0] ['id'] ?>">
                     <label for="title">Title</label>
                     <p style="color:blue"><?php echo empty($titleHeaderError) ? '' : $titleHeaderError ?></p>
-                    <input class="form-control" type="text" name="titleHead" value="<?php echo $result [0] ['title'] ?>">
+                    <input class="form-control" type="text" name="titleHead" value="<?php echo escape($result [0] ['title'])?>">
                     </div>
                     <div class="form-group">
                       <label for="content">Content</label>
                       <p style="color:blue"><?php echo empty($contentError) ? '' : $contentError ?></p>
-                      <textarea class="form-control" name="content" rows="8" cols="80"><?php echo $result [0] ['content'] ?></textarea>
+                      <textarea class="form-control" name="content" rows="8" cols="80"><?php echo escape($result [0] ['content']) ?></textarea>
                       </div>
 
                       <div class="form-group">

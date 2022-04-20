@@ -1,7 +1,8 @@
 
 <?php
-require '../config/config.php';
 session_start();
+require '../config/config.php';
+require '../config/common.php';
 if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESSION['user_name'])){
   echo "<script>alert('please login first.');window.location.href='login.php'</script>";
 }
@@ -82,9 +83,9 @@ if($_SESSION['role'] != 1 ){
                       ?>
                       <tr>
                         <td> <?php echo $id ?></td>
-                        <td><?php echo $value ['title'] ?></td>
+                        <td><?php echo escape($value ['title']) ?></td>
                         <td>
-                          <?php echo substr($value ['content'],0,50).'. . . .'?>
+                          <?php echo escape(substr($value ['content'],0,50).'. . . .')?>
                         </td>
                         <td>
                           <div class="btn-group">

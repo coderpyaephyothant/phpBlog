@@ -1,7 +1,8 @@
 
 <?php
-require '../config/config.php';
 session_start();
+require '../config/config.php';
+require '../config/common.php';
 if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESSION['user_name'])){
   echo "<script>alert('please login first.');window.location.href='login.php'</script>";
 }
@@ -103,9 +104,9 @@ if (!empty($_POST['search'])){
                         <td> <?php echo $id ?></td>
 
                         <td> <?php if($value['role']== 1){echo "Admin"; }else { echo "User";} ?></td>
-                        <td><?php echo  $value ['name'] ?></td>
+                        <td><?php echo  escape($value ['name']) ?></td>
                         <td>
-                          <?php echo $value ['email'] ?>
+                          <?php echo escape($value ['email'] )?>
                         </td>
                         <td>
                           <div class="btn-group">

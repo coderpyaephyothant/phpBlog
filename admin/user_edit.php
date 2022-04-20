@@ -105,12 +105,12 @@ session_start();
         <div class="form-group ">
           <label for="inputEmail3" class="col-form-label">Name</label>
           <p style="color:blue;"><?php echo empty($nameError) ? '' : $nameError ?></p>
-            <input type="text" name="name" class="form-control" value="<?php echo $user_result[0] ['name'] ?>"  placeholder="Name" >
+            <input type="text" name="name" class="form-control" value="<?php echo escape($user_result[0] ['name']) ?>"  placeholder="Name" >
           </div>
           <div class="form-group ">
             <label for="inputEmail3" class="col-form-label">Email</label>
             <p style="color:blue;"><?php echo empty($emailError) ? '' : $emailError ?></p>
-              <input type="email" name="email" class="form-control" value="<?php echo $user_result [0] ['email'] ?>"   placeholder="Email" >
+              <input type="email" name="email" class="form-control" value="<?php echo escape($user_result [0] ['email']) ?>"   placeholder="Email" >
           </div>
           <div class="form-group ">
             <label for="inputEmail3" class="col-form-label">Password</label>
