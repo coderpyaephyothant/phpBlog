@@ -3,8 +3,10 @@
 
 
 <?php
+session_start();
   require '../config/config.php';
-  session_start();
+  require '../config/common.php';
+
 
   if(!empty($_POST)){
     $name = $_POST['name'];
@@ -66,7 +68,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin Blogs | Log in</title>
+  <title> Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -84,16 +86,17 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href=""><b>Login </b> Account Creation</a>
+    <a href=""><b>Create Your Account</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="card card-info">
-    <div class="card-header">
-      <h3 class="card-title">User Add Form</h3>
+    <div class="card-header" >
+      <h3 class="card-title" style="float:none !important; text-align:center;">User Account Creation Form</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
     <form class="form-horizontal" action="useraddform.php" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="_token" value="<?php echo $_SESSION['_token']; ?>">
       <div class="card-body">
         <div class="form-group ">
           <label for="inputEmail3" class="col-form-label">Name</label>

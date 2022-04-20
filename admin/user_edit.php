@@ -1,7 +1,9 @@
 
 <?php
+session_start();
   require '../config/config.php';
-  session_start();
+  require '../config/common.php';
+
   if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESSION['user_name'])){
     echo "<script>alert('please login first.');window.location.href='login.php'</script>";
   }
@@ -15,7 +17,7 @@
         $id = $_POST['id'];
         if ( empty($_POST['role']) ){
             $role=0;
-          } else { 
+          } else {
             $role = 1;
           }
             if (empty($_POST['name']) || empty($_POST['email']) || !empty($_POST['password'])&& strlen($_POST['password'])<4 ) {
@@ -97,6 +99,7 @@
     <!-- /.card-header -->
     <!-- form start -->
     <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="_token" value="<?php echo $_SESSION['_token']; ?>">
       <div class="card-body">
         <input type="hidden" name="id" value="<?php echo $user_result [0] ['id'] ?>">
         <div class="form-group ">

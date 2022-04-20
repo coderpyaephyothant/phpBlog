@@ -1,6 +1,7 @@
 <?php
-  require 'config/config.php';
   session_start();
+  require 'config/config.php';
+  require 'config/common.php';
 
   if(!empty($_POST)){
     $name = $_POST['name'];
@@ -75,6 +76,7 @@
       <h4 class="login-box-msg">Register</h4>
 
       <form action="register.php" method="post">
+        <input type="hidden" name="_token" value="<?php echo $_SESSION['_token']; ?>">
         <p style="color:red;font-size:13px;"><b><?php echo  empty($nameError) ? '' : $nameError;?></b></p>
         <div class="input-group mb-3">
           <input type="text" name="name" class="form-control" placeholder="Name">

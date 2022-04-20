@@ -1,6 +1,8 @@
 <?php
+session_start();
   require '../config/config.php';
-  session_start();
+  require '../config/common.php';
+
 
   if(!empty($_POST)){
     $email = $_POST['email'];
@@ -10,19 +12,6 @@
     $pdostatement->bindValue(':email',$email);
     $pdostatement->execute();
     $result = $pdostatement->fetch(PDO::FETCH_ASSOC);
-
-
-    // print"<pre>";
-    // print_r($result); exit();
-
-    // if($result['role'] >= 1 ){
-    //   echo"<script>alert('User cannot enter...')</script>";
-    // }else {
-    //
-    //   echo"<script>alert('Welcome admin')</script>";
-    //
-    // } exit();
-
     if($result){
       if (password_verify($password,$result['password'])){
         $_SESSION['user_name'] = $result['name'];
@@ -32,9 +21,7 @@
         header('Location:index.php');
       }
     }
-
       echo"<script>alert('Wrong email or password')</script>";
-
   }
 ?>
 
@@ -69,6 +56,7 @@
       <p class="login-box-msg">Sign in to start your session</p>
 
       <form action="login.php" method="post">
+        <input type="hidden" name="_token" value="<?php echo $_SESSION['_token']; ?>">
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control" placeholder="Email">
           <div class="input-group-append">

@@ -1,7 +1,9 @@
 
 <?php
-require '../config/config.php';
 session_start();
+require '../config/config.php';
+require '../config/common.php';
+
 if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESSION['user_name'])){
   echo "<script>alert('please login first.');window.location.href='login.php'</script>";
 }
@@ -67,6 +69,7 @@ if($_POST){
             <div class="card">
               <div class="card-body">
                 <form class="" action="create.php" method="post" enctype="multipart/form-data">
+                  <input type="hidden" name="_token" value="<?php echo $_SESSION['_token']; ?>">
                   <div class="form-group">
                     <label for="title">Title</label>
                     <p style="color:blue;"><?php echo empty($titleHeadError) ? '': $titleHeadError ?></p>

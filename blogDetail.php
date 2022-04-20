@@ -1,7 +1,8 @@
 
 <?php
-require 'config/config.php';
 session_start();
+require 'config/config.php';
+require 'config/common.php';
 if( empty($_SESSION['user_id']) && empty($_SESSION['logged_in']) && empty($_SESSION['user_name'])){
   echo "<script>alert('please login first.');window.location.href='login.php'</script>";
 };
@@ -118,8 +119,7 @@ if(!empty($_POST)){
             <!-- /.card-footer -->
             <div class="card-footer">
               <form action="" method="post">
-                <!-- <img class="img-fluid img-circle img-sm" src="dist/img/user4-128x128.jpg" alt="Alt Text"> -->
-                <!-- .img-push is used to add margin to elements next to floating images -->
+                <input type="hidden" name="_token" value="<?php echo $_SESSION['_token']; ?>">
                 <div class="img-push">
                   <p style="color:red;"><?php echo empty($commentError) ? '' : $commentError; ?></p>
                   <input type="text" name="comment" class="form-control form-control-sm" placeholder="Press enter to post comment">
